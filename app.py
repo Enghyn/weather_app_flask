@@ -1,20 +1,12 @@
 import urllib.request
-from flask import Flask, render_template, url_for, redirect, request
-from database import db
-from flask_migrate import Migrate
+from flask import Flask, render_template, request
 from models import Ciudad
 from forms import CiudadForm
 import urllib
 import json
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:admin@localhost/weather_flask_db"
 app.config["SECRET_KEY"] = "weather_app_flask"
-
-db.init_app(app)
-
-migrate = Migrate()
-migrate.init_app(app,db)
 
 @app.route("/", methods=["GET","POST"])
 @app.route("/index", methods=["GET","POST"])
@@ -24,7 +16,6 @@ def index():
     ciudad = None
     no_encontrado = None
     if request.method == "POST" and ciudadForm.validate_on_submit():
-        #ciudad_a_buscar = Ciudad.query.filter_by(nombre = ciudadForm.ciudad.data).first()
         url = f"http://api.openweathermap.org/geo/1.0/direct?q={ciudadForm.ciudad.data}&appid=55b37df780fc1295f42961f68c09a597"
         try:
             with urllib.request.urlopen(url) as respuesta:
@@ -35,11 +26,11 @@ def index():
                 weather_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=55b37df780fc1295f42961f68c09a597"
                 with urllib.request.urlopen(weather_url) as weather_data:
                     ciudad_a_buscar = json.load(weather_data)
-            ciudad = Ciudad(nombre=ciudadForm.ciudad.data, 
-                            pais=ciudad_data[0]["local_names"]["es"], 
-                            temperatura=round(ciudad_a_buscar["main"]["temp"] - 273.15, 2),
-                            presion=ciudad_a_buscar["main"]["pressure"],
-                            humedad=ciudad_a_buscar["main"]["humidity"])
+                    ciudad = {"nombre":ciudadForm.ciudad.data, 
+                        "pais":ciudad_data[0]["local_names"]["es"], 
+                        "temperatura":round(ciudad_a_buscar["main"]["temp"] - 273.15, 2),
+                        "presion":ciudad_a_buscar["main"]["pressure"],
+                        "humedad":ciudad_a_buscar["main"]["humidity"]}
         except:
             return render_template("index.html", ciudad=ciudad, form=ciudadForm, error="No se encontro esa ciudad")
         if not ciudad:

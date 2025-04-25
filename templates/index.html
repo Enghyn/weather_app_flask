@@ -21,10 +21,10 @@
         <div class="card mt-5 mx-auto" style="max-width: 400px;">
             <div class="card-body">
                 <h5 class="card-title">Información de la Ciudad</h5>
-                <p class="card-text"><strong>País:</strong> {{ ciudad.pais }}</p>
-                <p class="card-text"><strong>Temperatura:</strong> {{ ciudad.temperatura }}°C</p>
-                <p class="card-text"><strong>Presión:</strong> {{ ciudad.presion }} hPa</p>
-                <p class="card-text"><strong>Humedad:</strong> {{ ciudad.humedad }}%</p>
+                <p class="card-text"><strong>País:</strong> {{ ciudad["pais"] }}</p>
+                <p class="card-text"><strong>Temperatura:</strong> {{ ciudad["temperatura"] }}°C</p>
+                <p class="card-text"><strong>Presión:</strong> {{ ciudad["presion"] }} hPa</p>
+                <p class="card-text"><strong>Humedad:</strong> {{ ciudad["humedad"] }}%</p>
             </div>
         </div>
         {% endif %}
