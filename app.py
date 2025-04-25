@@ -27,7 +27,7 @@ def index():
                 with urllib.request.urlopen(weather_url) as weather_data:
                     ciudad_a_buscar = json.load(weather_data)
                     ciudad = {"nombre":ciudadForm.ciudad.data, 
-                        "pais":ciudad_data[0]["state"], 
+                        "pais":ciudad_data[0]["country"], 
                         "temperatura":round(ciudad_a_buscar["main"]["temp"] - 273.15, 2),
                         "presion":ciudad_a_buscar["main"]["pressure"],
                         "humedad":ciudad_a_buscar["main"]["humidity"]}
