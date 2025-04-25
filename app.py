@@ -8,7 +8,7 @@ import urllib
 import json
 
 app = Flask(__name__)
-#app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:admin@localhost/weather_flask_db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:admin@localhost/weather_flask_db"
 app.config["SECRET_KEY"] = "weather_app_flask"
 
 db.init_app(app)
