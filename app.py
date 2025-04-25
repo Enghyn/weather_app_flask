@@ -8,7 +8,7 @@ import urllib
 import json
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:admin@localhost/weather_flask_db"
+#app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:admin@localhost/weather_flask_db"
 app.config["SECRET_KEY"] = "weather_app_flask"
 
 db.init_app(app)
@@ -45,3 +45,8 @@ def index():
         if not ciudad:
             no_encontrado = "No se encontro esa ciudad"
     return render_template("index.html", ciudad=ciudad, form=ciudadForm, error=no_encontrado)
+
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
